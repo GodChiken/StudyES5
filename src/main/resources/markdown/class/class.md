@@ -29,4 +29,33 @@
     * instanceof 는 생성자에 의해서 초기화된건지 검증하지 않고 [프로토타입을 상속하는가 검증]하는 키워드 이다.
     * 별도로 이 연산자에 대해서 공부할 가치가 있어보이긴 한다.
 * constructor 프로퍼티
-    * (여기부터 내일)    
+    * prototype 프로퍼티가 있어야지만 모든 함수는 생성자가 될 수 있다. 그래서 자동으로 설정이 된다.
+    * ES5 에서는 Function.bind() 메서드가 반환하는 함수는 자동으로 설정되지 않는다.
+    * 자동으로 설정되는 prototype property 의 값은 constructor property 하나만 가진 객체이다.   
+    이 constructor property 는 열거되지 않고 값으로 해당 함수 객체를 가진다.
+    * 참 설명이.. 알아먹기 힘들다.
+         ```
+         var someFunction = function() {};
+         var protoTypeInSomeFunction = someFunction.prototype;
+         var constructorInProtoTypeInSomeFunction = protoTypeInSomeFunction.constructor;
+         console.log(someFunction == constructorInProtoTypeInSomeFunction) // true
+         ```
+    * 어떤 객체에 프로토타입 객체에 constructor property 가 있다는 것은   
+      이 객체의 생성자를 가르키는 constructor property 역시 상속함을 뜻한다.   
+      이 사실을 통해서 constructor 를 통하여 클래스를 구별하거나 객체의 클래스를 얻어낼 수 있다는 사실을 알 수 있다.
+    * 별도로 정의하는 프로토타입 객체에는 constructor 가 자동으로 생기진 않는다. 이럴경우 명시적으로 설정하여 해결이 가능한다.
+        ```
+        Range.prototype = {
+            constructor : Range, //이런 식으로 명시적으로 역참조를 위해 설정할 수 있다.
+            //etc...
+        }
+        ``` 
+      * 혹은 이럴 필요가 없이 미리 정의된 프로토타입 객체를 확장해 나가는 식으로 진행하는 것도 하나의 방법이다.
+          ```
+          Range.prototype.etc1 = function(){ //something }
+          Range.prototype.etc2 = function(){ //something }
+          Range.prototype.etc3 = function(){ //something }
+          ```  
+* 자바 스타일 클래스
+    * 궁금했던 정보이기는 하다. 뭔 차이가 있는지 알아보려고 한다.
+    * (내일은 여기부터)         
