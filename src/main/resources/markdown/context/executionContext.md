@@ -18,10 +18,10 @@
         * Scope Chain   : Variable Object 와 모든 부모의 스코프
         * this          : 컨텍스트 오브젝트
     * 이러한 실행 코드를 하나씩 접근할떄 자바스크립트는 실행 컨텍스트를 생성한다.
-        * FunctionDeclaration, WithStatement, TryStatement의 Catch 절과 같은 몇가지 특정한 구문 구조와 연관되어 있다.
+        * FunctionDeclaration, WithStatement, TryStatement 의 Catch 절과 같은 몇가지 특정한 구문 구조와 연관되어 있다.
 * 실행 컨텍스트의 구조
     * Lexical Environment, Variable Environment 는 Lexical Environment 타입을 가지고   
-    ThisBinding은 object 타입을 가진다.
+    ThisBinding 은 object 타입을 가진다.
     * Variable Environment 도 Lexical Environment 인데 어째서 나뉜건가?
     * Lexical Environment :    
        > 코드의 정적인 렉시컬 중첩 구조를 기반으로 하는 함수, 변수 등을 열거한다.   
@@ -48,7 +48,7 @@
                      이들은 식별자 바인딩을 ECMAScript 언어 값과 직접 연관 시킨다.
                     * 다음의 코드와 같이 와 Object 안에 실제 값들이 저장되어 있는 형태를 취한다. 
                     ```
-                        DeclartionEnvironmentRecord = {
+                        DeclarativeEnvironmentRecord = {
                             a: 33,
                             b: 'Hello World'
                         }
@@ -224,3 +224,16 @@
         * 만약 이제 상위 EC에 있는 값을 사용하려 할때는 어떻게 하는가 ? 에 대해 궁금해 할 수있는데 이때 사용되는것이 OuterEnvironmentReference 이다.
         * 이때 저 곳에 참조된 값을 사용하여서 상위 Scope로 찾아올라가게 된다.
         * 이 과정이 바로 Scope Chain 이다.
+* 스코프 체인(Scope Chain)
+    * 스코프 체인은 일종의 리스트로서 전역 객체와 중첩된 함수의 스코프의 레퍼런스를 차례로 저장하고 있다. 
+    * 스코프 체인은 해당 전역 또는 함수가 참조할 수 있는 변수, 함수 선언 등의 정보를 담고 있는 전역 객체(Global Object) 또는 활성 객체(Active Object)의 리스트를 가리킨다.
+    * 현재 실행 컨텍스트의 활성 객체를 선두로 하여 순차적으로 상위 컨텍스트의 활성 객체를 가리키며 마지막 리스트는 전역 객체를 가리킨다.
+    * 최상위 스코프는 null 이다. 최상위니까 더이상 갈 곳이 없으니까.
+    * 엔진은 스코프 체인을 통해 렉시컬 스코프를 파악한다. 함수가 중첩 상태일 때 하위함수 내에서 상위함수의 스코프와 전역 스코프까지 참조할 수 있는데 이것는 스코프 체인을 검색을 통해 가능하다.
+    * 함수가 중첩되어 있으면 중첩될 때마다 부모 함수의 스코프가 자식 함수의 스코프 체인에 포함된다. 
+    * 함수 실행중에 변수를 만나면 그 변수를 우선 현재 스코프에 해당되는 활성 객체에서 검색해보고, 만약 검색에 실패하면 스코프 체인에 담겨진 순서대로 그 검색을 이어가게 되는 것이다.
+    * 예를 들어 함수 내의 코드에서 변수를 참조하면 엔진은 스코프 체인의 첫번째 리스트가 가리키는 AO에 접근하여 변수를 검색한다. 
+    * 만일 검색에 실패하면 다음 리스트가 가리키는 활성 객체를 타고 흐르다 최종적으로 전역 객체를 검색한다. 
+    * 이와 같이 순차적으로 스코프 체인에서 변수를 검색하는데 결국 검색에 실패하면 정의되지 않은 변수에 접근하는 것으로 판단하여 Reference 에러를 발생시킨다. 
+    * 스코프 체인은 함수의 감추인 프로퍼티인 "[[Scope]]"로 참조할 수 있다.
+        
