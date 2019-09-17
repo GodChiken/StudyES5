@@ -54,7 +54,7 @@
               };
             }
             
-            const counter = new Counter();
+            var counter = new Counter();
             
             console.log(counter.increase()); // 1
             console.log(counter.decrease()); // 0        
