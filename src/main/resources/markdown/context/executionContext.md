@@ -175,7 +175,7 @@
         }
         ```
     * 이렇게 되는데 undefined 이고 msg 는 Function Reference 를 참조하는 이유는 함수 선언식과 함수 표현식에 대한 차이이다.
-    * sum 의 EC의 LE의 DeclarativeEnvironmentRecord 의 세팅이 완료 되었는데 이게 바로 호이스팅의 실체이기 때문이다.
+    * sum 의 EC의 LE의 Declarative Environment Record 의 세팅이 완료 되었는데 이게 바로 호이스팅의 실체이기 때문이다.
     * 런타임에서 실제적인 실행 전에 EC를 구성하는 단계에서 이런식으로 호이스팅이 일어나며 함수가 실행된다.
     * 이제 OuterEnvironmentReference 를 세팅해준다.
     * OuterEnvironmentReference 는 스팩을 보면 가까운 상위 EC를 참조한다고 되어있는데 현재의 경우에서는 상위 EC가 Global EC 이다.
