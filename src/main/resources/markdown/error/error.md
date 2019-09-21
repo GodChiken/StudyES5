@@ -13,5 +13,9 @@
             * SyntaxError : 문법 에러.
             * TypeError : 타입에 관련된 에러.
             * URIError : encodeURI(), decodeURI()에 옳지 않은 경로를 넘길 시 에러.
-    *                    
+    * 에러 반환
+        * throw 연산자 
+            * 커스텀 에러를 반환시키며 반드시 값이 필요하고 타입은 제한이 없다.
+            * try-catch 외부에서 사용 시 런터임 단계에서 코드의 수행은 멈춘다.
+                               
 * 코드 디버그
