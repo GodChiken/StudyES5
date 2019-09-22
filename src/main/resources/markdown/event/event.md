@@ -129,6 +129,32 @@
         * 바닐라 자바스크립트의 경우는 다음의 절차를 따른다.
             * 요소가 가지고 있는 기본 동작을 중단시키기 위한 메소드가 preventDefault()를 이용한다.
             * 어느 한 요소를 이용하여 이벤트를 처리한 후 이벤트가 부모 요소로 이벤트가 전파되는 것을 중단시키기 위한 메소드 stopPropagation()를 이용한다.
-     
-    
+* 비동기 처리와 콜백 함수
+    * 비동기 처리 예시 코드
+        * ajax 통신
+            ```
+                function getData() {
+                    var tableData;
+                    $.get('https://domain.com/products/1', function (response) {
+                        tableData = response;
+                    });
+                    return tableData;
+                }            
+                console.log(getData());             
+            ```
+        * setTimeout
+            ```
+            console.log('Hello');
+            
+            setTimeout(function () {
+            	console.log('Bye');
+            }, 3000);
+            
+            console.log('Hello Again');            
+            ```            
+    * 위 코드의 결과는 undefined 가 된다. 그 이유는 특정 로직의 실행이 끝날 때까지 기다려주지 않고 나머지 코드를 먼저 실행이 됬기 때문이다.
+    * 해당 코드들을 해결하기위해 위와 같은 비동기 작업의 실행 이후 다음 실행해야 할 함수를 아규먼트로 쥐어주는데 이것이 바로 콜백 함수이다.
+    * 허나 위와같은 구조를 남발하여 "**콜백의 콜백의 콜백**" 을 남발하는 것을 콜백 지옥이라 불른다. 위와같은 구조가 되버리면 가독성과 유지보수성이 떨어진다.
+    * 하여 보통 분리를 하여 개선한다고 한다.
+    * ES6 에서는 Promise, Async 등으로 이용하여 더 편하게 구현한다곤하나, 이 마저도 결국 좋은 방법은 아니라는 말이 있긴하다.  
                         
