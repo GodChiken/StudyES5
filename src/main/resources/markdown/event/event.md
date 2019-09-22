@@ -49,4 +49,86 @@
             * 평범한 함수의 경우에는 순서대로 Call Stack 에 쌓인다.
             * 즉시 실행되지 않고, 타이머 객체의 실행 이벤트(tick)가 발생하면 Event Queue 에 적재된다.
             * *(핵심!!) 그 이후에 Call Stack 이 전부 비워진 이후에 실행이 된다.*
-            * [event loop 그림 첨부]   
+            * [event loop 그림 첨부]
+* 이벤트 핸들러 등록 방식
+    * 인라인 이벤트 핸들러 방식 
+        * DOM 요소에는 이벤트 핸들러에 관한 속성이 존재하지만 쓰지 않는 점이 좋다.
+        * 관심사가 다르고 자바스크립트의 이벤트가 DOM 요소에 종속적으로 두면 각 관심사 별로 집중이 안되어 분리해서 사용하곤 있다.
+    * 스크립트 코드 내에서 특정 DOM 의 프로퍼티에 해당 이벤트 핸들러 기술
+        * 이벤트 핸들러 프로퍼티 방식은 이벤트에 하나의 이벤트 핸들러만을 바인딩할 수 있다
+        * 여러 이벤트를 등록하기 위해서는 addEventListener(IE 8 이하 : attachEvent) 를 통해 등록해야한다.
+        * eventTarget.addEventListener('eventType', functionName [, useCapture]
+            > useCapture 는 기본이 false 이며 버블링을 허용하게된다. 
+        ```
+        <script>
+            var btn = document.querySelector('.btn');        
+            
+            btn.onclick = function () {
+              alert('나는 아래 함수로 재선언 되기 때문에 등록이 안되');
+            };
+        
+            // 두번째 바인딩된 이벤트 핸들러
+            btn.onclick = function () {
+              alert('윗놈의 자리를 내가 차지했다.');
+            };
+        
+            btn.addEventListener('click', function () {
+              alert('아우 먼저');
+            });
+                    
+            btn.addEventListener('click', function () {
+              alert('형님 먼저');
+            });
+        </script>        
+        ```
+* 이벤트의 흐름        
+    * 버블링 (Bubbling)
+        * 엘리먼트에서 이벤트가 감지 되었을 때, 해당 엘리먼트를 포함하고 있는 부모 엘리먼트를 통하여 최상위 까지 이벤트가 전달되는 것을 버블링이라고 한다.
+    * 캡쳐링 (Capturing)
+        * 캡처링은 window 부터 최초 이벤트가 발생한 자식 요소로 내려가는 과정을 말한다.
+    * 주의할 것은 버블링과 캡처링은 둘 중에 하나만 발생하는 것이 아니라 캡처링부터 시작하여 버블링으로 종료한다는 것이다. 
+    * 즉, 이벤트가 발생했을 때 캡처링과 버블링은 순차적으로 발생한다. IE8 버전에서 지원되지 않는다.
+    * [그림 첨부]
+    * 버튼을 클릭했다고 했을 때 다음 코드의 결과를 예상해보자.
+    ```
+        <html>
+        <head>
+          <style>
+            html, body { height: 100%; }
+          </style>
+        <body>
+          <p>버블링과 캡처링 이벤트 <button>버튼</button></p>
+          <script>
+            const body = document.querySelector('body');
+            const para = document.querySelector('p');
+            const button = document.querySelector('button');
+
+            // 버블링
+            body.addEventListener('click', function () {
+              console.log('Handler for body.');
+            });
+
+            // 캡처링
+            para.addEventListener('click', function () {
+              console.log('Handler for paragraph.');
+            }, true);
+
+            // 버블링
+            button.addEventListener('click', function () {
+              console.log('Handler for button.');
+            });
+          </script>
+        </body>
+        </html>    
+    ```
+    * body, button 요소는 버블링 이벤트 흐름만을 캐치하고 p 요소는 캡처링 이벤트 흐름만을 캐치한다.   
+    따라서 button 에서 이벤트가 발생하면 먼저 캡처링이 발생하므로 p 요소의 이벤트 핸들러가 동작하고   
+    그후 버블링이 발생하여 button, body 요소의 이벤트 핸들러가 동작한다.
+    * 누구나 코딩할때 위와같은 문제를 겪었을 것이고 신경쓰지 않고 해당 DOM 에만 집중하고 싶었을 것이다.
+        * Jquery 를 사용하고 있다면 해당 이벤트 핸들러에 return 값으로 false  쥐어준다.
+        * 바닐라 자바스크립트의 경우는 다음의 절차를 따른다.
+            * 요소가 가지고 있는 기본 동작을 중단시키기 위한 메소드가 preventDefault()를 이용한다.
+            * 어느 한 요소를 이용하여 이벤트를 처리한 후 이벤트가 부모 요소로 이벤트가 전파되는 것을 중단시키기 위한 메소드 stopPropagation()를 이용한다.
+     
+    
+                        
