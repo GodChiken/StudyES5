@@ -48,4 +48,49 @@
         
         Person.prototype.name = 'Kim';
         console.log(Person.prototype.getName());    
-    ```      
+    ```
+* 생성자 함수 호출
+    * 뭐라고 선언하든지 간에 기존 함수 new 키워드를 붙여 호출하면 생성자 함수가 된다.
+    * 규제가 되있는건 아니나 보통 생성자 함수는 첫 글자는 대문자로 수행한다.
+    * 생성자 함수의 작동 방식
+        1.  빈 객체 생성 및 this binding
+            * 생성자 함수의 코드가 실행되기 전에 빈 객체가 생성된다. 
+            * 이 빈 객체가 생성자 함수를 새로 생성하는 객체라고 하며 this 키워드는 이 객체를 binding 한다.
+            * 생성된 빈 객체는 생성자 함수의 prototype property 가 가르키는 객체를 자신의 프로토타입 객체로 설정한다.
+        2. this 를 통한 프로퍼티 생성
+            * 생성된 빈 객체에 this 를 활용하여 동적으로 프로퍼티나 메서드를 생성이 가능하다. this 는 새로 생성된 객체를 가르키므로 this 를 통해 생성한 프로퍼티,메서드는 새로 생성된 객체에 추가된다. 
+        3. 생성된 객체 반환
+            * 반환문이 없는 경우
+                * this 에 binding 되어있는 가장 최근에 생성된 객체가 반환된다.
+                    > 명시적으로 return this; 를 하여도 마찬가지다.                
+            * 반환문이 있는경우
+                * 명시적인 this 반환 외의 다른 객체를 반환하는 경우 해당 객체를 반환한다.
+                * 또한 생성자 함수로서 역활 수행이 불가하다.
+    * 객체 리터럴 vs 생성자 함수
+        * 객체 리터럴 방식과 생성자 함수 방식의 차이는 프로토타입 객체(\[\[Prototype\]\])에 있다.
+            * 객체 리터럴 방식의 경우, 생성된 객체의 프로토타입 객체는 Object.prototype 이다.
+            * 생성자 함수 방식의 경우, 생성된 객체의 프로토타입 객체는 Person.prototype 이다.
+        ```
+            // 객체 리터럴 방식
+            var foo = {
+              name: 'foo',
+              gender: 'male'
+            }
+            
+            console.dir(foo);
+            
+            // 생성자 함수 방식
+            function Person(name, gender) {
+              this.name = name;
+              this.gender = gender;
+            }
+            
+            var me  = new Person('Lee', 'male');
+            console.dir(me);
+            
+            var you = new Person('Kim', 'female');
+            console.dir(you);        
+        ```            
+* 생성자 함수에 new 키워드를 붙이지 않을 경우
+* apply, call, bind 호출     
+                  
