@@ -31,5 +31,21 @@
     * 결론적으로는 함수 자체가 별도의 처리가 없으면 항상 this binding 은 전역객체를 바인딩 한다. [왜 그런가?](https://github.com/GodChiken/StudyES5/blame/master/src/main/resources/markdown/context/executionContext.md#L117-L122)
     * 그렇다면 어떤 함수이건 간에 호출시점에서 다른 객체에 Binding 된 this 를 활용하는 방법은 무엇이 있을까? [왜지?](https://github.com/GodChiken/StudyES5/blame/master/src/main/resources/markdown/function/function.md#L32-L35)
     * 위의 링크와 다른 예제로 this 를 명시적으로 바인딩 하는 apply, call, bind 등을 활용하는것도 하나의 방법이다.
-    
-             
+* 메소드 호출
+    * 함수가 객체의 프로퍼티 값이면 메소드로서 호출된다. 이때 메소드 내부의 this 는 해당 메소드를 소유한 객체, 즉 해당 메소드를 호출한 객체에 바인딩된다.
+    * 프로토타입 객체도 메소드를 가질 수 있다. 프로토타입 객체 메소드 내부에서 사용된 this 도 일반 메소드 방식과 마찬가지로 해당 메소드를 호출한 객체에 바인딩된다.
+    ```
+        function Person(name) {
+          this.name = name;
+        }
+        
+        Person.prototype.getName = function() {
+          return this.name;
+        }
+        
+        var me = new Person('Lee');
+        console.log(me.getName());
+        
+        Person.prototype.name = 'Kim';
+        console.log(Person.prototype.getName());    
+    ```      
