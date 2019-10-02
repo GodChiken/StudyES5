@@ -130,5 +130,6 @@
             console.log(a.value);
             console.log(b.value);        
         ```        
-* apply, call, bind 호출     
-                  
+* apply, call, bind 호출
+    * Function prototype 에 있는 메소드를 이용하여 명시적으로 this 를 바인딩 하는 방식이다.         
+    * 정리를 하려고 했으나 특별히 실무적으로 사용할 것 같지 않아 마무리 한다.               
