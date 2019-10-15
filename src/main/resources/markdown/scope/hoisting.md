@@ -21,7 +21,7 @@
 	        console.log(x);
         }
         ```
-    * 지난 #8 이슈를 확인해보면, Declarative environment Record 이부분을 언급한 적이 있다.(line:178)
+    * 실행컨텍스트에서 [Declarative environment Record](https://github.com/GodChiken/StudyES5/blame/master/src/main/resources/markdown/context/executionContext.md#L177-L179) 이부분을 언급한 적이 있다.
     * 선언문 "var x" 는 최상단으로 끌어올려지기 때문에 런타임시 할당문이 실행되기 전까지는 "undefined" 상태라는 것을 유념하자. 호이스팅이 안되는 것이 아니다.
     * 또한 if 문과 같은 중괄호로 감싸져 있다 할지라도 선언문은 항상 최상위로 위차하니 주의시킨다.
 * 함수 호이스팅
